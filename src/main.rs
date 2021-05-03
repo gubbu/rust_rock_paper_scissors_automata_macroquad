@@ -92,7 +92,7 @@ async fn main() {
         let height = macroquad::window::screen_height();
         let block_width = width / (GAMEWIDTH - 2) as f32;
         let block_height = height / (GAMEHEIGHT - 2) as f32;
-        macroquad::window::clear_background(macroquad::color::BLACK);
+        macroquad::window::clear_background( macroquad::color::Color{r: 0.0, g: 0.0, b: 1.0, a: 1.0});
         for y in 1..GAMEHEIGHT - 1 {
             for x in 1..GAMEWIDTH - 1 {
                 let x_coor = (x - 1) as f32 * block_width;
@@ -113,14 +113,6 @@ async fn main() {
                         block_width,
                         block_height,
                         macroquad::color::Color{r: 0.0, g: 1.0, b: 0.0, a: 1.0}
-                    );
-                } else if tile == PAPER {
-                    macroquad::shapes::draw_rectangle(
-                        x_coor,
-                        y_coor,
-                        block_width,
-                        block_height,
-                        macroquad::color::Color{r: 0.0, g: 0.0, b: 1.0, a: 1.0}
                     );
                 }
             }
