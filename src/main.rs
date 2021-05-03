@@ -1,3 +1,5 @@
+use macroquad::prelude::*;
+
 const ROCK: u8 = 1;
 const PAPER: u8 = 2;
 const SCISSORS: u8 = 3;
@@ -79,70 +81,70 @@ async fn main() {
     //populate randomly
     //macroquad::rand::srand(10);
     let mut digits: Vec<usize> = vec![];
-    let mut last_tick = macroquad::get_time();
+    let mut last_tick = macroquad::time::get_time();
     loop {
-        let delta_time = macroquad::get_time() - last_tick;
+        let delta_time = macroquad::time::get_time() - last_tick;
         if delta_time < 0.25 {
             continue;
         }
 
-        let width = macroquad::screen_width();
-        let height = macroquad::screen_height();
+        let width = macroquad::window::screen_width();
+        let height = macroquad::window::screen_height();
         let block_width = width / (GAMEWIDTH - 2) as f32;
         let block_height = height / (GAMEHEIGHT - 2) as f32;
-        macroquad::clear_background(macroquad::BLACK);
+        macroquad::window::clear_background(macroquad::color::BLACK);
         for y in 1..GAMEHEIGHT - 1 {
             for x in 1..GAMEWIDTH - 1 {
                 let x_coor = (x - 1) as f32 * block_width;
                 let y_coor = (y - 1) as f32 * block_height;
                 let tile = game_state[y][x];
                 if tile == SCISSORS {
-                    macroquad::draw_rectangle(
+                    macroquad::shapes::draw_rectangle(
                         x_coor,
                         y_coor,
                         block_width,
                         block_height,
-                        macroquad::Color([255, 0, 0, 255]),
+                        macroquad::color::Color{r: 1.0, g: 0.0, b: 0.0, a: 1.0}
                     );
                 } else if tile == ROCK {
-                    macroquad::draw_rectangle(
+                    macroquad::shapes::draw_rectangle(
                         x_coor,
                         y_coor,
                         block_width,
                         block_height,
-                        macroquad::Color([0, 255, 0, 255]),
+                        macroquad::color::Color{r: 0.0, g: 1.0, b: 0.0, a: 1.0}
                     );
                 } else if tile == PAPER {
-                    macroquad::draw_rectangle(
+                    macroquad::shapes::draw_rectangle(
                         x_coor,
                         y_coor,
                         block_width,
                         block_height,
-                        macroquad::Color([0, 0, 255, 255]),
+                        macroquad::color::Color{r: 0.0, g: 0.0, b: 1.0, a: 1.0}
                     );
                 }
             }
         }
 
-        if macroquad::is_key_pressed(macroquad::KeyCode::Key1) {
+        if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key1) {
             digits.push(1);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key2) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key2) {
             digits.push(2);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key3) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key3) {
             digits.push(3);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key4) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key4) {
             digits.push(4);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key5) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key5) {
             digits.push(5);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key6) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key6) {
             digits.push(6);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key7) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key7) {
             digits.push(7);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key8) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key8) {
             digits.push(8);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key9) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key9) {
             digits.push(9);
-        } else if macroquad::is_key_pressed(macroquad::KeyCode::Key0) {
+        } else if macroquad::input::is_key_pressed(macroquad::input::KeyCode::Key0) {
             digits.push(0);
         }
         if digits.len() == max_digits {
@@ -157,7 +159,7 @@ async fn main() {
             game_state = randomize_with_seed(num as u64);
         }
         game_state = simulation(game_state);
-        last_tick = macroquad::get_time();
-        macroquad::next_frame().await
+        last_tick = macroquad::time::get_time();
+        macroquad::window::next_frame().await
     }
 }
